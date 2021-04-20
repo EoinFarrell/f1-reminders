@@ -24,17 +24,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Twilio SMS
-        # You may pin to the exact commit or the version.
-        # uses: twilio-labs/actions-sms@d1488bc77f2cc44182fb444073326ccc715103b0
-        uses: twilio-labs/actions-sms@v1
-        with:
-          # Phone number in your Twilio account to send the SMS from
-          fromPhoneNumber: +1(442)2374323
-          # Phone number to send the SMS to
-          toPhoneNumber: +(353)871902762
-          # The message you want to send
-          message: race soon 3
-          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
-          TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
-          TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
+      - name: Setup Go environment
+        uses: actions/setup-go@v2.1.3
+      - name: Build
+        run: go build
+      - name: Run
+        run: ./f1-reminders
+      
+      
