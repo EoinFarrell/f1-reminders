@@ -30,5 +30,10 @@ jobs:
         run: go build
       - name: Run
         run: ./f1-reminders
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          PHONE_NUMBERS: ${{ secrets.PHONE_NUMBERS }}
+          MessagingServiceSid: ${{ secrets.MessagingServiceSid }}
+          TWILIO_TOKEN: ${{ secrets.TWILIO_TOKEN }}
       
       
