@@ -81,7 +81,7 @@ func sendSMS(number string, race Race) {
 	data.Set("MessagingServiceSid", os.Getenv("MessagingServiceSid"))
 
 	loc, _ := time.LoadLocation("Europe/Dublin")
-	data.Set("Body", "Next Race: "+race.RaceName+" at: "+race.DateTime.In(loc).Format(time.RFC1123))
+	data.Set("Body", "Next Race: "+race.RaceName+" at: "+race.DateTime.In(loc).Format(time.RFC1123) + ". https://www.formula1.com/")
 
 	url, _ := url.ParseRequestURI("https://api.twilio.com/2010-04-01/Accounts/" + os.Getenv("TWILIO_ACCOUNT_SID") + "/Messages.json")
 
