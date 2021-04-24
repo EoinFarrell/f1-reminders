@@ -1,0 +1,19 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
+  #product-hunt {
+    margin-top: 1rem;
+  }
+  
+  body > footer {
+    text-align: right;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
