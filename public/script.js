@@ -1,24 +1,21 @@
-const form = document.querySelector('form');
-const thankYouMessage = document.querySelector('#thank-you-message');
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  thankYouMessage.classList.add('show');
-  setTimeout(() => form.submit(), 2000);
-});
+function formSubmit(event) {
+  var url = "https://phrhyp7dx2.execute-api.eu-west-1.amazonaws.com/Production";
+  var request = new XMLHttpRequest();
+  request.open('POST', url, true);
+  request.onload = function() { // request successful
+  // we can use server response to our request now
+    console.log(request.responseText);
+    new Notif("Thank you for signing up and enjoy the next race.", "success").display(3500);
+  };
 
-// document.addEventListener('DOMContentLoaded', function() { // make sure the DOM is fully loaded before starting anything
-//     Notif.setWrapperOptions({ duration: 4000 });
-//   }, false);
+  request.onerror = function() {
+    // request failed
+    new Notif("Error submitting form, sorry, maybe try again.", "error").display(3500);
+  };
 
-var successNotif = new Notif("Yay, this message notifies you about the success of whatever!", "success");
-var errorNotif = new Notif("Oups, this is a notification you usually hope to not display.", "error");
-var confirmedNotif = new Notif("Let's just confirm that whatever happened.", "confirmed");
-var defaultNotif = new Notif("This message is just meant to say hi; so \"hi!\"", "default");
+  request.send(new FormData(event.target)); // create FormData from form that triggered event
+  event.preventDefault();
+}
 
-var myNotif = new Notif('Hey, what about this very nice notification, with a <a href="#">link</a> and everything?', "default");
-document.getElementById('my-button').addEventListener('click', function(e) {
-  myNotif.display(3500);
-  /* You could also chain everything if it's a one time notification, such as:
-   * new Notif('This is a one time notification, so no need to keep it in a JS variable.', "confirmed").display(4000);
-   */
-});
+
+document.querySelector('form').addEventListener("submit", formSubmit);
