@@ -9,15 +9,14 @@
     <meta name="description" content="Service to get an SMS/Email reminder of the start time for the next F1 race."/>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
+    <link rel="stylesheet" type="text/css" href="watnotif.center-top-unstretch.min.css" />
+      <link rel="stylesheet" href="style.css" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
     <link rel="icon" id="icon-16" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png" />
     <link rel="icon" id="icon-32" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png" />
 
     <link rel="manifest" href="./site.webmanifest" />
-
-    <!-- Custom styles for the documentation / version picker -->
-    <link rel="stylesheet" href="style.css" />
 
     <meta name="twitter:card" content="summary" />
     <meta property="og:type" content="website" />
@@ -37,38 +36,25 @@
 
     <div class="row">
       <div>
-        <!--  <a href="https://github.com/eoinfarrell/f1-reminders"><b>How its built</b></a>
-        <br />  -->
         <a href="https://github.com/eoinfarrell/f1-reminders"><b>GitHub</b></a>
       </div>
-
-      <!--  <a
-        href="https://www.producthunt.com/posts/water-css?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-water-css"
-        target="_blank"
-        rel="noopener"
-      >
-        <img
-          id="product-hunt"
-          src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=150490&theme=dark&period=daily"
-          alt="Water.css - Make your tiny website just a little nicer | Product Hunt Embed"
-          style="width: 250px; height: 54px;"
-          width="250px"
-          height="54px"
-        />
-      </a>  -->
     </div>
 
     <br/>
 
+    <p id="thank-you-message">
+      Thank you for contacting us. We will be in touch with you very soon.
+    </p>
+
     <form action="https://phrhyp7dx2.execute-api.eu-west-1.amazonaws.com/Production" method="POST">
       <label for="phone">Phone Number</label>
-      <input name="phone" id="phone" value="" />
+      <input name="phone" id="phone" />
 
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" value="asdf" />
+      <input type="email" name="email" id="email" />
 
       <label for="timezone">Timezone</label>
-      <input type="timezone" name="timezone" id="timezone" value="asdf" />
+      <input type="timezone" name="timezone" id="timezone" />
 
       <br/>
 
@@ -76,10 +62,13 @@
       <input type="reset" value="Reset" />
     </form>
 
+    <button id="my-button">Gimme my notif</button>
+
     <footer>
       <a href="#">Back to top ⬆</a>
     </footer>
 
-    <script src="script.js" defer></script>
+    <script type="text/javascript" src="script.js" defer></script>
+    <script type="text/javascript" src="watnotif-1.0.min.js" defer></script>
   </body>
 </html>

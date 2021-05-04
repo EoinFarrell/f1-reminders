@@ -17,3 +17,10 @@ html {
     justify-content: space-between;
   }
   
+  #thank-you-message {
+    display: none;
+  }
+  
+  #thank-you-message.show {
+    display: block;
+  }
