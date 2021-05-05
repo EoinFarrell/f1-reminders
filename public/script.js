@@ -2,6 +2,7 @@ function formSubmit(event) {
   var url = "https://phrhyp7dx2.execute-api.eu-west-1.amazonaws.com/Production";
   var request = new XMLHttpRequest();
   request.open('POST', url, true);
+  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   request.onload = function() { // request successful
   // we can use server response to our request now
     console.log(request.responseText);
