@@ -69,6 +69,32 @@ func getSchedule() MRData {
 }
 
 func SendNotifications(race Race) {
+	url, _ := url.ParseRequestURI("https://phrhyp7dx2.execute-api.eu-west-1.amazonaws.com/Production")
+
+	req, err := http.NewRequest("GET", url.String(), nil)
+	//Handle Error
+	if err != nil {
+		log.Fatalf("An Error Occured %v", err)
+	}
+
+	req.Header.Set("Accept", "application/json")
+
+	cli := &http.Client{}
+	resp, err := cli.Do(req)
+
+	//Handle Error
+	if err != nil {
+		log.Fatalf("An Error Occured %v", err)
+	}
+	defer resp.Body.Close()
+	//Read the response body
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	sb := string(body)
+	log.Printf(sb)
+
 	for _, number := range strings.Split(os.Getenv("PHONE_NUMBERS"), ",") {
 		fmt.Println(race.Time)
 		sendSMS(number, race)
@@ -81,11 +107,15 @@ func sendSMS(number string, race Race) {
 	data.Set("MessagingServiceSid", os.Getenv("MessagingServiceSid"))
 
 	loc, _ := time.LoadLocation("Europe/Dublin")
-	data.Set("Body", "Next Race: "+race.RaceName+" at: "+race.DateTime.In(loc).Format(time.RFC1123) + ". https://www.formula1.com/")
+	data.Set("Body", "Next Race: "+race.RaceName+" at: "+race.DateTime.In(loc).Format(time.RFC1123)+". https://www.formula1.com/")
 
 	url, _ := url.ParseRequestURI("https://api.twilio.com/2010-04-01/Accounts/" + os.Getenv("TWILIO_ACCOUNT_SID") + "/Messages.json")
 
 	req, err := http.NewRequest("POST", url.String(), strings.NewReader(data.Encode()))
+	//Handle Error
+	if err != nil {
+		log.Fatalf("An Error Occured %v", err)
+	}
 
 	req.Header.Set("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
