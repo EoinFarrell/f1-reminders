@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,7 +11,7 @@ import (
 	"time"
 )
 
-type Response struct {
+type ErgastResponse struct {
 	MRData MRData `json:"MRData"`
 }
 
@@ -38,8 +37,19 @@ type Race struct {
 	DateTime    time.Time `json:"omitempty"`
 }
 
+type DbResponse struct {
+	Users []User `json:"users"`
+}
+
+type User struct {
+	UserId   string `json:"userId,omitempty"`
+	Phone    string `json:"phone,omitempty"`
+	Email    string `json:"email,omitempty"`
+	Timezone string `json:"timezone,omitempty"`
+}
+
 func main() {
-	for _, race := range getSchedule().RaceTable.Races {
+	for _, race := range GetSchedule().RaceTable.Races {
 		t, _ := time.Parse(time.RFC3339, race.Date+"T"+race.Time)
 
 		if t.After(time.Now()) {
@@ -50,7 +60,7 @@ func main() {
 	}
 }
 
-func getSchedule() MRData {
+func GetSchedule() MRData {
 	resp, err := http.Get("http://ergast.com/api/f1/current.json")
 	if err != nil {
 		log.Fatalln(err)
@@ -62,13 +72,13 @@ func getSchedule() MRData {
 		log.Fatalln(err)
 	}
 
-	var response Response
+	var response ErgastResponse
 	json.Unmarshal(body, &response)
 
 	return response.MRData
 }
 
-func SendNotifications(race Race) {
+func GetUsers() DbResponse {
 	url, _ := url.ParseRequestURI("https://phrhyp7dx2.execute-api.eu-west-1.amazonaws.com/Production")
 
 	req, err := http.NewRequest("GET", url.String(), nil)
@@ -92,16 +102,20 @@ func SendNotifications(race Race) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	sb := string(body)
-	log.Printf(sb)
 
-	for _, number := range strings.Split(os.Getenv("PHONE_NUMBERS"), ",") {
-		fmt.Println(race.Time)
-		sendSMS(number, race)
+	var response DbResponse
+	json.Unmarshal(body, &response)
+
+	return response
+}
+
+func SendNotifications(race Race) {
+	for _, user := range GetUsers().Users {
+		SendSMS(user.Phone, race)
 	}
 }
 
-func sendSMS(number string, race Race) {
+func SendSMS(number string, race Race) {
 	data := url.Values{}
 	data.Set("To", number)
 	data.Set("MessagingServiceSid", os.Getenv("MessagingServiceSid"))
