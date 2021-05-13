@@ -111,16 +111,16 @@ func GetUsers() DbResponse {
 
 func SendNotifications(race Race) {
 	for _, user := range GetUsers().Users {
-		SendSMS(user.Phone, race)
+		SendSMS(user, race)
 	}
 }
 
-func SendSMS(number string, race Race) {
+func SendSMS(user User, race Race) {
 	data := url.Values{}
-	data.Set("To", number)
+	data.Set("To", user.Phone)
 	data.Set("MessagingServiceSid", os.Getenv("MessagingServiceSid"))
 
-	loc, _ := time.LoadLocation("Europe/Dublin")
+	loc, _ := time.LoadLocation(user.Timezone)
 	data.Set("Body", "Next Race: "+race.RaceName+" at: "+race.DateTime.In(loc).Format(time.RFC1123)+". https://www.formula1.com/")
 
 	url, _ := url.ParseRequestURI("https://api.twilio.com/2010-04-01/Accounts/" + os.Getenv("TWILIO_ACCOUNT_SID") + "/Messages.json")
