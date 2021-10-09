@@ -1,8 +1,15 @@
+const phoneInputField = document.querySelector("#phone");
+const phoneInput = window.intlTelInput(phoneInputField, {
+  preferredCountries: ["ie", "gb", "us"],
+  utilsScript:
+    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
+});
+
 async function formSubmit(event) {
   event.preventDefault();
   
   let user = {
-    phone: document.querySelector('#phone').value,
+    phone: phoneInput.getNumber(),
     email: document.querySelector('#email').value,
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
   };

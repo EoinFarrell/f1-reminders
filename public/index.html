@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
     <link rel="stylesheet" type="text/css" href="watnotif.center-top-unstretch.min.css" />
-      <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
     <link rel="icon" id="icon-16" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png" />
@@ -25,6 +25,9 @@
     <meta property="og:description" content="Service to get an SMS/Email reminder of the start time for the next F1 race."/>
     <meta property="og:image" content="https://raw.githubusercontent.com/kognise/water.css/master/assets/logo.png"/>
     <meta property="og:locale" content="en_GB">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
   </head>
 
   <body>
@@ -34,19 +37,17 @@
       Make sure you don't miss the next F1 Race by complete the form to receive sms/email notification of the next F1 race start time, the night before the race. 
     </p>
 
-    <div class="row">
-      <div>
-        <a href="https://github.com/eoinfarrell/f1-reminders"><b>GitHub</b></a>
-      </div>
-    </div>
-
     <br/>
 
     <form action="" method="POST">
-      <label for="phone">Phone Number (including country prefix)</label>
-      <input name="phone" id="phone" />
+      <label for="phone">Phone Number:</label>
+      <br/>
+      <input type="tel" name="phone" id="phone" />
 
-      <label for="email">Email</label>
+      <br/>
+      <br/>
+
+      <label for="email">Email:</label>
       <input type="email" name="email" id="email" />
 
       <input type="hidden" name="timezone" id="timezone" />
@@ -54,10 +55,15 @@
       <br/>
 
       <input type="submit" value="Submit" />
-      <input type="reset" value="Reset" />
     </form>
 
     <script type="text/javascript" src="watnotif-1.0.min.js" defer></script>
     <script type="text/javascript" src="script.js" defer></script>
+
+    <div class="row">
+      <div>
+        <h4><a href="https://github.com/eoinfarrell/f1-reminders">Source Code</a></h4>
+      </div>
+    </div>
   </body>
 </html>
